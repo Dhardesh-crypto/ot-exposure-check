@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+# Real site data and reports describe a site's weaknesses. Never commit them.
+otcheck-site/
+demo/
+report.html

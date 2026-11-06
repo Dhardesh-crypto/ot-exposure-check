@@ -1,0 +1,16 @@
+{
+  "name": "Example Cold Store (simulated)",
+  "sector": "refrigeration",
+  "addresses": [
+    "192.0.2.30",
+    "192.0.2.31"
+  ],
+  "authorised_by": "Sam Example",
+  "role": "Site IT lead",
+  "authorised_on": "2026-11-06",
+  "statement": "I am authorised by the organisation that runs this site to review the security of these addresses, and I believe the addresses belong to it.",
+  "owners": {
+    "192.0.2.30": "Documentation address (simulated)",
+    "192.0.2.31": "Documentation address (simulated)"
+  }
+}

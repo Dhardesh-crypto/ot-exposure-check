@@ -1,0 +1,40 @@
+# Sector questions apply the CISA guidance to cooling systems. Reported 2026
+# attacks raised freezer setpoints and forced defrost.
+questions:
+  - id: independent-temperature-alarm
+    category: resilience
+    severity: high
+    ask: If the control system were tampered with, would a separate device still warn you that temperatures are rising?
+    help: For example, an independent data logger with its own alert. An alarm in the same controller counts as "no".
+    why: CISA reports attackers turning off alarms, so the alarm should not rely only on the system being attacked.
+    fix: Add an independent temperature logger for critical cold rooms and freezers, with alerts that reach a person.
+    refs: [cisa-2024]
+    frameworks: ["CISA CPG 5.A", "IEC 62443 FR7"]
+  - id: setpoint-limits
+    category: resilience
+    severity: high
+    ask: Are there limits in the controller or hardware that stop setpoints and defrost cycles from going beyond safe values?
+    help: Ask your refrigeration contractor. Without confirmation, answer "don't know".
+    why: Limits reduce the harm of a compromise, because a remote user cannot push equipment beyond them.
+    fix: Ask your contractor to set hard limits on setpoints and defrost, and add interlocks where possible.
+    refs: [cisa-2024]
+    frameworks: ["IEC 62443 FR3", "NIS2 Art. 21(2)(c)"]
+  - id: contractor-monitoring-link
+    category: exposure
+    severity: high
+    allow_na: true
+    ask: Have you confirmed with your refrigeration contractor exactly how their remote monitoring connects to this site?
+    help: Ask whether it uses a public address, a port forward, a VPN or a cellular router.
+    why: Monitoring links can leave the panel reachable from the internet without the site knowing.
+    fix: Ask the contractor for a written description of the connection, and move it to a VPN with multifactor authentication.
+    refs: [cisa-2025]
+    frameworks: ["CISA CPG 2.X", "NIS2 Art. 21(2)(d)"]
+  - id: stock-plan
+    category: resilience
+    severity: medium
+    ask: Is it written down who decides whether food stays on sale if temperatures have gone out of range?
+    help: Include how to check how long the temperature was out of range.
+    why: Fast, clear decisions protect customers and limit loss during an incident.
+    fix: Add temperature excursion steps to the site's food safety plan, with a named decision-maker.
+    refs: [cisa-2025]
+    frameworks: ["NIS2 Art. 21(2)(c)"]

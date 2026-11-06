@@ -1,0 +1,22 @@
+{
+  "default-passwords": "yes",
+  "strong-passwords": "yes",
+  "remote-private": "yes",
+  "mfa": "yes",
+  "vendor-access": "yes",
+  "dormant-accounts": "yes",
+  "vnc-updated": "yes",
+  "remote-logging": "yes",
+  "connection-inventory": "yes",
+  "segmentation": "no",
+  "manual-operation": "yes",
+  "backups": "yes",
+  "incident-contacts": "yes",
+  "logic-integrity": "yes",
+  "end-of-life": "yes",
+  "network-diagrams": "yes",
+  "process-limits": "no",
+  "independent-quality-check": "yes",
+  "telemetry-links": "unsure",
+  "overflow-response": "yes"
+}

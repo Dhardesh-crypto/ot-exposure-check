@@ -1,0 +1,86 @@
+# What counts as an exposed control system.
+# Matching: "modules" must equal the scanner's protocol module. "keywords" are
+# searched in the product name and page title. "ports" alone gives a lower
+# confidence result, because any service can run on any port.
+# Default ports come from common protocol references; review them as the
+# product matures.
+rules:
+  - id: modbus
+    name: Modbus controller
+    severity: critical
+    ports: [502]
+    modules: [modbus]
+    keywords: [modbus]
+    why: Modbus has no password. Anyone who can reach it may be able to read and change values on the controller.
+  - id: s7
+    name: Siemens S7 controller
+    severity: critical
+    ports: [102]
+    modules: [s7]
+    keywords: [simatic]
+    why: This is a direct connection to a programmable controller, which should never face the internet.
+  - id: bacnet
+    name: BACnet building or plant controller
+    severity: critical
+    ports: [47808]
+    modules: [bacnet]
+    keywords: [bacnet]
+    why: BACnet commonly runs HVAC and refrigeration plant and has little or no built-in access control.
+  - id: dnp3
+    name: DNP3 telemetry
+    severity: critical
+    ports: [20000]
+    modules: [dnp3]
+    keywords: [dnp3]
+    why: DNP3 is used to monitor and command remote equipment such as pump stations.
+  - id: ethernetip
+    name: EtherNet/IP controller
+    severity: critical
+    ports: [44818]
+    modules: [ethernetip]
+    keywords: [ethernet/ip]
+    why: This is a direct connection to industrial controllers, which should never face the internet.
+  - id: niagara-fox
+    name: Niagara Fox building controller
+    severity: critical
+    ports: [1911, 4911]
+    modules: [niagara-fox]
+    keywords: [niagara]
+    why: Niagara controllers often supervise building and plant systems, including cooling.
+  - id: vnc
+    name: VNC remote screen
+    severity: critical
+    ports: [5900, 5901]
+    modules: [vnc]
+    keywords: [vnc]
+    why: CISA reports attackers using VNC with default or weak passwords to take over control screens.
+  - id: control-panel
+    name: Web control panel
+    severity: critical
+    ports: []
+    modules: []
+    keywords: [hmi, scada, webvisu, plc, pcoweb, xweb, ak-sm, refrigeration, plant controller]
+    why: A control panel on the internet can be reached by anyone who finds it, and is then protected by a password alone.
+  - id: rdp
+    name: Windows Remote Desktop
+    severity: high
+    ports: [3389]
+    modules: [rdp]
+    keywords: []
+    why: Remote Desktop on the internet is a common way in. If this machine runs or reaches control software, treat it as urgent.
+  - id: telnet
+    name: Telnet
+    severity: high
+    ports: [23]
+    modules: [telnet]
+    keywords: []
+    why: Telnet sends passwords unencrypted and is often left on routers and older devices.
+fix: >-
+  Agree a plan with the operator and the vendor first, because some monitoring
+  or alarms may rely on this connection. Then remove it from the public
+  internet. If remote access is essential, use a private connection or VPN with
+  a strong password and multifactor authentication. Ask whoever manages the
+  router or firewall to close the port, then re-run this check. Also look for
+  signs of tampering: changed setpoints, disabled alarms or unknown accounts.
+refs: [cisa-2025, cisa-2024]
+frameworks: ["CISA CPG 2.X", "IEC 62443 FR5", "NIS2 Art. 21(2)(i)"]

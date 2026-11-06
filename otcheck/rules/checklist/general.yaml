@@ -1,0 +1,152 @@
+# Topics follow the two CISA documents in references.yaml, rewritten in plain
+# language. "good" is the safe answer. allow_na lets a site skip what it lacks.
+questions:
+  - id: default-passwords
+    category: access
+    severity: critical
+    ask: Have the factory default passwords been changed on every control screen, controller and remote-access device?
+    help: Include touchscreens (HMIs), PLCs, routers and vendor web panels. If you cannot confirm a device, answer "don't know".
+    why: Default and easily guessed passwords are what CISA reports attackers using against these systems.
+    fix: Change every default password, starting with anything reachable from outside. Then open the remote settings panel and confirm the old password is no longer shown.
+    refs: [cisa-2025, cisa-2024]
+    frameworks: ["CISA CPG 2.A", "IEC 62443 FR1", "NIS2 Art. 21(2)(i)"]
+  - id: strong-passwords
+    category: access
+    severity: high
+    ask: Does each control system account have its own strong password, not shared with other sites or systems?
+    help: A single password used across all stores or plants counts as "no".
+    why: One leaked or guessed password should not open every site.
+    fix: Give each site and system a strong, unique password and keep them in a password manager.
+    refs: [cisa-2025]
+    frameworks: ["CISA CPG 2.B", "IEC 62443 FR1", "NIS2 Art. 21(2)(i)"]
+  - id: remote-private
+    category: access
+    severity: critical
+    allow_na: true
+    ask: Does all remote access go through a VPN or private connection, never straight from the internet to a control system?
+    help: Answer "not applicable" only if nobody ever connects to the control systems remotely, vendors included.
+    why: A panel open to the internet can be found with simple search tools.
+    fix: Move remote access behind a VPN or private network connection. Re-assess whether each remote connection is needed at all.
+    refs: [cisa-2025, cisa-2024]
+    frameworks: ["CISA CPG 2.X", "IEC 62443 FR5", "NIS2 Art. 21(2)(i)"]
+  - id: mfa
+    category: access
+    severity: high
+    allow_na: true
+    ask: Does remote access to control networks require multifactor authentication?
+    help: That is a password plus a second step, such as a security key or an authenticator app.
+    why: A stolen or guessed password alone should not be enough to get in.
+    fix: Turn on multifactor authentication for all access to the control network. Prefer a phishing-resistant type, such as security keys.
+    refs: [cisa-2025, cisa-2024]
+    frameworks: ["CISA CPG 2.H", "IEC 62443 FR1", "NIS2 Art. 21(2)(j)"]
+  - id: vendor-access
+    category: access
+    severity: high
+    allow_na: true
+    ask: Is every vendor and contractor remote connection documented, and limited to what that company needs?
+    help: Include installers, maintenance firms and any monitoring company.
+    why: Contractors may set up remote access for convenience, and misconfigurations can come in through them.
+    fix: List each vendor connection, limit it to the equipment and role needed, and ask vendors for configuration guidance.
+    refs: [cisa-2025]
+    frameworks: ["CISA CPG 2.H", "IEC 62443 FR2", "NIS2 Art. 21(2)(d)"]
+  - id: dormant-accounts
+    category: access
+    severity: medium
+    ask: Are unused accounts, including those of former staff and contractors, disabled?
+    help: Check control software, VPN and remote-access tools.
+    why: Forgotten accounts are not watched, so misuse can go unnoticed.
+    fix: Review accounts and disable anything no longer in use. Repeat at a regular interval.
+    refs: [cisa-2025]
+    frameworks: ["IEC 62443 FR2", "NIS2 Art. 21(2)(i)"]
+  - id: vnc-updated
+    category: access
+    severity: high
+    allow_na: true
+    ask: If VNC or similar remote-screen software is used, is it up to date and unreachable from the internet?
+    help: Answer "not applicable" if no remote-screen software is installed.
+    why: CISA reports attackers exploiting outdated VNC software to reach control screens.
+    fix: Update the software, or remove it if it is not needed. Keep it behind a VPN.
+    refs: [cisa-2024]
+    frameworks: ["CISA CPG 2.W", "IEC 62443 FR5"]
+  - id: remote-logging
+    category: access
+    severity: medium
+    allow_na: true
+    ask: Are remote logins recorded, and does someone look at failed attempts and unusual times?
+    help: Records that nobody reviews count as "no".
+    why: Without logs you may not learn that someone got in, or be able to work out what they changed.
+    fix: Log remote logins to control screens and review failures and unusual hours. Add alerts if you can.
+    refs: [cisa-2024]
+    frameworks: ["CISA CPG 2.T", "IEC 62443 FR6", "NIS2 Art. 21(2)(b)"]
+  - id: connection-inventory
+    category: exposure
+    severity: high
+    ask: Do you have a current list of every internet connection at this site, including any 4G or 5G routers fitted by vendors?
+    help: Check plant rooms and control cabinets. Vendors sometimes add their own cellular router.
+    why: This tool only checks the addresses you gave it. A vendor's SIM router has a different address and would be missed.
+    fix: Walk the site, list every connection and public address, and add any new addresses to this check.
+    refs: [cisa-2025]
+    frameworks: ["CISA CPG 1.A", "IEC 62443 FR5"]
+  - id: segmentation
+    category: exposure
+    severity: high
+    ask: Are control systems on a separate network from office computers and guest Wi-Fi?
+    help: One flat network shared by tills, office PCs and controllers counts as "no".
+    why: Separation stops a problem on an office computer from spreading to the systems that run the plant.
+    fix: Separate IT and control networks with a firewall, and use a demilitarised zone for any data that has to pass between them.
+    refs: [cisa-2025]
+    frameworks: ["CISA CPG 2.F", "IEC 62443 FR5", "NIS2 Art. 21(2)(i)"]
+  - id: manual-operation
+    category: resilience
+    severity: high
+    ask: Can staff run the essential equipment by hand, and has that been practised in the past year?
+    help: A written procedure that has never been tried counts as "no".
+    why: CISA reports that most water victims reverted to manual control and restored operations quickly.
+    fix: Write down the manual steps, train staff, and test them on a regular schedule.
+    refs: [cisa-2025, cisa-2024]
+    frameworks: ["CISA CPG 5.A", "IEC 62443 FR7", "NIS2 Art. 21(2)(c)"]
+  - id: backups
+    category: resilience
+    severity: high
+    ask: Are there tested backups of control logic, settings and firmware, stored away from the control network?
+    help: Ask your integrator if they hold these. A backup nobody has restored counts as "don't know".
+    why: Good backups make recovery quick if settings are changed or a device is locked.
+    fix: Back up logic, configurations and firmware, and practise factory resets and restores.
+    refs: [cisa-2024]
+    frameworks: ["CISA CPG 2.R", "IEC 62443 FR7", "NIS2 Art. 21(2)(c)"]
+  - id: incident-contacts
+    category: resilience
+    severity: high
+    ask: Does the site have a written plan saying who to call if control systems are tampered with, including out of hours?
+    help: Include the vendor, your IT lead, management and your national reporting body.
+    why: Attackers have changed settings and locked out operators, and hours can matter.
+    fix: Write a one-page plan with named contacts and keep a printed copy on site.
+    refs: [cisa-2024]
+    frameworks: ["NIS2 Art. 21(2)(b)"]
+  - id: logic-integrity
+    category: resilience
+    severity: medium
+    ask: Does someone periodically check that controller programs and key settings have not changed unexpectedly?
+    help: Comparing against a known good copy is enough.
+    why: Changes can be made quietly so a device runs in an unsafe way.
+    fix: Keep a known good copy and compare it regularly. Your integrator may be able to help.
+    refs: [cisa-2024]
+    frameworks: ["IEC 62443 FR3"]
+  - id: end-of-life
+    category: resilience
+    severity: medium
+    ask: Do you know which control screens and controllers are no longer supported by their maker?
+    help: Note the make, model and firmware of each device, then check with the vendor.
+    why: CISA noted that several compromised control screens were unsupported legacy devices.
+    fix: Keep an inventory, record end-of-life status, and replace unsupported devices as soon as feasible.
+    refs: [cisa-2024]
+    frameworks: ["CISA CPG 1.A", "NIS2 Art. 21(2)(e)"]
+  - id: network-diagrams
+    category: resilience
+    severity: medium
+    ask: Is there an up-to-date network diagram, with access limited to people who need it?
+    help: It should show both IT and control networks.
+    why: You need it during an incident, and it would also help an attacker.
+    fix: Update the diagram, restrict who can see it, and keep a copy available offline.
+    refs: [cisa-2024]
+    frameworks: ["CISA CPG 2.P", "NIS2 Art. 21(2)(i)"]

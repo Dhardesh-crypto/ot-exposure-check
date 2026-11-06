@@ -1,0 +1,16 @@
+{
+  "name": "Example Foods Store 12 (simulated)",
+  "sector": "refrigeration",
+  "addresses": [
+    "203.0.113.10",
+    "203.0.113.11"
+  ],
+  "authorised_by": "Sam Example",
+  "role": "Site IT lead",
+  "authorised_on": "2026-11-06",
+  "statement": "I am authorised by the organisation that runs this site to review the security of these addresses, and I believe the addresses belong to it.",
+  "owners": {
+    "203.0.113.10": "Documentation address (simulated)",
+    "203.0.113.11": "Documentation address (simulated)"
+  }
+}

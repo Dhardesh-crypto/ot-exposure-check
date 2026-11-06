@@ -1,0 +1,3 @@
+{"ip_str": "198.51.100.20", "port": 502, "transport": "tcp", "timestamp": "2026-11-02T04:10:00", "_shodan": {"module": "modbus"}}
+{"ip_str": "198.51.100.20", "port": 20000, "transport": "tcp", "timestamp": "2026-11-02T04:10:00", "_shodan": {"module": "dnp3"}}
+{"ip_str": "198.51.100.20", "port": 3389, "transport": "tcp", "timestamp": "2026-08-01T04:10:00", "_shodan": {"module": "rdp"}}

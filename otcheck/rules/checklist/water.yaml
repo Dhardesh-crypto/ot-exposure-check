@@ -1,0 +1,39 @@
+# Sector questions apply the CISA guidance to water and wastewater sites.
+questions:
+  - id: process-limits
+    category: resilience
+    severity: high
+    ask: Are there hard limits or interlocks that stop pumps, blowers and chemical dosing going beyond safe values?
+    help: Ask your process engineer or integrator. Limits that exist only on the screen do not count.
+    why: CISA reports attackers maxing out setpoints, pushing pumps and blowers past normal limits.
+    fix: Add software and hardware limits, using operational interlocks and safety systems.
+    refs: [cisa-2024]
+    frameworks: ["IEC 62443 FR3", "NIS2 Art. 21(2)(c)"]
+  - id: independent-quality-check
+    category: resilience
+    severity: high
+    ask: If control screens showed false readings, would an independent check still reveal a water quality problem?
+    help: For example, separate instruments or routine manual sampling.
+    why: Operators should not have to rely only on a system that may have been altered.
+    fix: Keep independent or manual checks for the readings that protect public health.
+    refs: [cisa-2024]
+    frameworks: ["CISA CPG 5.A", "IEC 62443 FR7"]
+  - id: telemetry-links
+    category: exposure
+    severity: high
+    allow_na: true
+    ask: Do you know how every remote pump station or outstation connects, and is each link private?
+    help: Include cellular and radio links. Each cellular link may have its own public address.
+    why: Remote sites are easy to overlook, and an exposed one can give access to the wider system.
+    fix: List every remote link, add any public addresses to this check, and move links to private networks.
+    refs: [cisa-2025]
+    frameworks: ["CISA CPG 2.X", "IEC 62443 FR5"]
+  - id: overflow-response
+    category: resilience
+    severity: medium
+    ask: Are staff trained to spot and respond to pumps or tanks behaving abnormally because of tampering?
+    help: This includes knowing to switch to manual control and report it.
+    why: CISA reports some victims had minor tank overflows after remote manipulation.
+    fix: Add tampering scenarios to operator training and drills.
+    refs: [cisa-2024]
+    frameworks: ["NIS2 Art. 21(2)(b)"]

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "otcheck"
+version = "0.1.0"
+description = "Read-only internet exposure and basics check for industrial sites"
+requires-python = ">=3.9"
+dependencies = ["PyYAML>=6", "Jinja2>=3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+otcheck = "otcheck.cli:main"
+
+[tool.setuptools]
+packages = ["otcheck"]
+
+[tool.setuptools.package-data]
+otcheck = ["rules/*.yaml", "rules/checklist/*.yaml", "templates/*.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

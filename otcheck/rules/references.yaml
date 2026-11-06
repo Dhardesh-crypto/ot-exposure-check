@@ -1,0 +1,8 @@
+# Sources cited in reports. Framework labels (IEC 62443, NIS2) are pointers for
+# further reading, not a compliance assessment.
+cisa-2025:
+  title: "CISA, FBI, EPA, DOE: Primary Mitigations to Reduce Cyber Threats to Operational Technology (May 2025)"
+  url: https://www.cisa.gov/resources-tools/resources/primary-mitigations-reduce-cyber-threats-operational-technology
+cisa-2024:
+  title: "CISA and partners: Defending OT Operations Against Ongoing Pro-Russia Hacktivist Activity (May 2024)"
+  url: https://www.cisa.gov/resources-tools/resources/defending-ot-operations-against-ongoing-pro-russia-hacktivist-activity

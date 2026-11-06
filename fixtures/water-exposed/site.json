@@ -1,0 +1,14 @@
+{
+  "name": "Example Water Works (simulated)",
+  "sector": "water",
+  "addresses": [
+    "198.51.100.20"
+  ],
+  "authorised_by": "Sam Example",
+  "role": "Site IT lead",
+  "authorised_on": "2026-11-06",
+  "statement": "I am authorised by the organisation that runs this site to review the security of these addresses, and I believe the addresses belong to it.",
+  "owners": {
+    "198.51.100.20": "Documentation address (simulated)"
+  }
+}

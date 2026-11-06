@@ -1,0 +1,1 @@
+{"ip_str": "192.0.2.30", "port": 443, "transport": "tcp", "timestamp": "2026-11-02T04:10:00", "_shodan": {"module": "https"}, "product": "nginx", "http": {"title": "Example Cold Store"}}
