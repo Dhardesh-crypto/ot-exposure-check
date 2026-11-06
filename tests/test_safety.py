@@ -3,6 +3,7 @@
 import io
 import json
 import re
+import subprocess
 from pathlib import Path
 from urllib.error import HTTPError
 
@@ -113,3 +114,13 @@ def test_only_net_module_imports_network_libraries():
     pattern = re.compile(r"^\s*(import|from)\s+(socket|urllib|http|requests|ssl)\b", re.M)
     offenders = [p.name for p in package.glob("*.py") if p.name != "net.py" and pattern.search(p.read_text())]
     assert offenders == []
+
+
+def test_packaged_files_are_not_git_ignored():
+    """Files can exist here and still be missing from a fresh clone."""
+    root = Path(__file__).parent.parent
+    if not (root / ".git").exists():
+        pytest.skip("not a git checkout")
+    files = [str(p) for p in (root / "otcheck").rglob("*") if p.is_file() and "__pycache__" not in p.parts]
+    result = subprocess.run(["git", "check-ignore", *files], cwd=root, capture_output=True, text=True)
+    assert result.stdout == ""
