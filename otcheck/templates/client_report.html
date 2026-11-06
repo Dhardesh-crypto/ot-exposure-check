@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security review: {{ engagement.client }}</title>
+<style>{{ css | safe }}
+  .sitegrid td.num { white-space: nowrap; }
+  .tablewrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+<section class="sheet">
+  <p class="confidential">Confidential. Prepared for {{ engagement.client }}. This report describes security weaknesses. Share it only with people who need it.</p>
+  <h1>{{ engagement.client }}</h1>
+  <p class="meta">Exposure and basics review · {{ models | length }} site{{ "" if models | length == 1 else "s" }} · Issued {{ issued }} · Prepared by {{ engagement.consultant }}</p>
+
+  {% set total = counts.critical + counts.high + counts.medium %}
+  <div class="verdict {{ 'urgent' if counts.critical else 'action' if total else 'clear' if complete else 'incomplete' }}">
+    {% if counts.critical %}<strong>Act now: {{ counts.critical }} critical issue{{ "" if counts.critical == 1 else "s" }} found</strong>
+    <span>Agree each change with the operator and vendor first, so monitoring and alarms keep working.</span>
+    {% elif total %}<strong>{{ total }} issue{{ "" if total == 1 else "s" }} to fix</strong>
+    <span>No critical issue was found in this data, but these gaps should be closed.</span>
+    {% elif complete %}<strong>Nothing found in this data</strong>
+    <span>This does not show that the sites are safe from attack. Read "What this review cannot see" before relying on this result.</span>
+    {% else %}<strong>Review not finished</strong>
+    <span>Finish the outstanding work listed below before relying on this report.</span>{% endif %}
+    {% if total and not complete %}<br><span><b>This review is not finished,</b> so there may be more issues.</span>{% endif %}
+  </div>
+
+  <div class="counts">
+    <div class="count"><b>{{ counts.critical }}</b><span>Critical</span></div>
+    <div class="count"><b>{{ counts.high }}</b><span>High</span></div>
+    <div class="count"><b>{{ counts.medium }}</b><span>Medium</span></div>
+  </div>
+
+  {% if findings %}
+  <h2>Do these first</h2>
+  <ol class="first">{% for item in findings[:5] %}<li>{{ item.site }}: {{ item.action }}</li>{% endfor %}</ol>
+  {% endif %}
+
+  <h2>Sites</h2>
+  <div class="tablewrap"><table class="sitegrid">
+    <tr><th>Site</th><th>Critical</th><th>High</th><th>Medium</th><th>Questions</th><th>Scan</th></tr>
+    {% for m in models %}<tr><td>{{ m.site.name }}</td><td class="num">{{ m.counts.critical }}</td><td class="num">{{ m.counts.high }}</td><td class="num">{{ m.counts.medium }}</td><td class="num">{{ m.questions_answered }}/{{ m.questions_total }}</td><td>{{ "Done" if m.scan else "Not done" }}</td></tr>{% endfor %}
+  </table></div>
+  <p></p>
+  <p class="small">Authorised by {{ engagement.authoriser }} under {{ engagement.authorisation_ref }}, valid {{ engagement.start }} to {{ engagement.end }}. Everything here comes from third-party scan data, supplied files and interviews. No client equipment was contacted by this tool.</p>
+</section>
+
+{% if retest %}
+<section class="sheet">
+  <h2>Retest against {{ retest.baseline }}</h2>
+  <p>Compared on {{ retest.compared_on }}: {{ retest.not_found | length }} no longer found, {{ retest.still_open | length }} still open, {{ retest.new | length }} new. "No longer found" means the issue is missing from this data. It isn't proof of a fix, so confirm each one.</p>
+  {% if retest.not_found %}<h3>No longer found</h3><ul>{% for i in retest.not_found %}<li>{{ i.site }}: {{ i.title }}</li>{% endfor %}</ul>{% endif %}
+  {% if retest.still_open %}<h3>Still open</h3><ul>{% for i in retest.still_open %}<li>{{ i.site }}: {{ i.title }}</li>{% endfor %}</ul>{% endif %}
+  {% if retest.new %}<h3>New</h3><ul>{% for i in retest.new %}<li>{{ i.site }}: {{ i.title }}</li>{% endfor %}</ul>{% endif %}
+</section>
+{% endif %}
+
+{% if patterns.repeated or patterns.contractors %}
+<section class="sheet">
+  <h2>Patterns across sites</h2>
+  <p>A problem repeated across sites often has one cause, so one fix can close several findings.</p>
+  {% if patterns.contractors %}<h3>Contractors linked to several affected sites</h3>
+  <ul>{% for c in patterns.contractors %}<li>{{ c.name }}: {{ c.sites | join(", ") }}. This shows a link, not that the contractor caused the issue.</li>{% endfor %}</ul>{% endif %}
+  {% if patterns.repeated %}<h3>Repeated findings</h3>
+  <ul>{% for r in patterns.repeated %}<li>{{ r.title }} ({{ r.sites | length }} sites: {{ r.sites | join(", ") }})</li>{% endfor %}</ul>{% endif %}
+</section>
+{% endif %}
+
+{% if findings %}
+<section class="sheet">
+  <h2>Findings, in priority order</h2>
+  {% for item in findings %}
+  <article class="finding">
+    <div class="tags"><span class="sev {{ item.severity }}">{{ item.severity }}</span> · {{ item.site }} · {{ item.category_label }}</div>
+    <h3>{{ item.title }}</h3>
+    <p class="small">Evidence: {{ item.evidence_label }}{% if item.stale %} · <b>This scan data is over 30 days old, so confirm it still applies.</b>{% endif %}</p>
+    <p><span class="label">Why it matters:</span> {{ item.why }}</p>
+    <p><span class="label">What to do:</span> {{ item.fix }}</p>
+    <p class="small">Further reading: {{ item.frameworks | join(" · ") }} · Tracker ID: {{ item.id }}</p>
+  </article>
+  {% endfor %}
+</section>
+{% endif %}
+
+{% set with_inventory = models | selectattr("traffic") | list %}
+{% if with_inventory %}
+<section class="sheet">
+  <h2>Control devices seen in network logs</h2>
+  {% for m in with_inventory %}
+  <h3>{{ m.site.name }}</h3>
+  <p class="small">{{ m.traffic.flows_read }} connection records read{% if m.traffic.rows_skipped %}, {{ m.traffic.rows_skipped }} unreadable records skipped{% endif %}.</p>
+  <div class="tablewrap"><table><tr><th>Device</th><th>Protocols</th><th>Talks to</th></tr>
+  {% for d in m.traffic.devices %}<tr><td>{{ d.ip }}</td><td>{{ d.protocols | join(", ") }}</td><td>{{ d.clients | join(", ") }}</td></tr>{% endfor %}
+  </table></div><p></p>
+  {% endfor %}
+</section>
+{% endif %}
+
+<section class="sheet">
+  <h2>What this review cannot see</h2>
+  <ul>
+    <li><b>Scan data is a snapshot.</b> It comes from a third party and may be out of date or incomplete. Having no record does not prove an address is closed.</li>
+    {% for m in models %}{% if m.scan and m.scan.addresses_without_data %}<li><b>{{ m.site.name }}: no scan record for</b> {{ m.scan.addresses_without_data | join(", ") }}.</li>{% endif %}{% if m.scan and m.scan.out_of_scope_skipped %}<li><b>{{ m.site.name }}:</b> {{ m.scan.out_of_scope_skipped }} scan record(s) outside the agreed scope were ignored.</li>{% endif %}{% if m.good_answers_stated %}<li><b>{{ m.site.name }}:</b> {{ m.good_answers_stated }} good answer(s) were stated but not verified.</li>{% endif %}{% endfor %}
+    <li><b>Only the agreed sites and addresses were reviewed.</b> Other connections, including a vendor's cellular router, were not checked unless listed.</li>
+    <li><b>Network logs only show what passed the capture point</b> during the period supplied. Quiet devices and other network segments won't appear.</li>
+    <li><b>"Check" results are prompts.</b> A product name match doesn't prove a device is vulnerable.</li>
+    <li><b>This is not a penetration test or a compliance assessment.</b> No testing was done on equipment, and this review can't show whether someone has already got in. The IEC 62443 and NIS2 labels are pointers, not an audit result.</li>
+  </ul>
+  {% if references %}<h2>Sources</h2>
+  <ul>{% for ref in references %}<li><a href="{{ ref.url }}">{{ ref.title }}</a></li>{% endfor %}</ul>{% endif %}
+</section>
+</main>
+</body>
+</html>

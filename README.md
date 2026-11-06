@@ -100,6 +100,10 @@ The report lists your site's weaknesses, so store and share it carefully. Your s
 
 Detection rules and questions are data files in `otcheck/rules/`. All fixtures are simulated and use reserved documentation addresses.
 
+## For security consultants
+
+`otcheck engagement` covers several client sites, authorisation dates, evidence, offline Zeek or Malcolm logs, a client report and retests. See [CONSULTANTS.md](CONSULTANTS.md).
+
 ## Status
 
 Early version. It has only been tested on simulated data, and live Shodan and registry lookups have not yet been run against the real services. It does not replace a professional assessment.

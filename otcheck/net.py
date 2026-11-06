@@ -13,6 +13,7 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 ALLOWED_HOSTS = frozenset(
     {
         "api.shodan.io",
+        "www.cisa.gov",
         "rdap.org",
         "rdap.arin.net",
         "rdap.db.ripe.net",

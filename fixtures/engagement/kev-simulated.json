@@ -1,0 +1,9 @@
+{
+  "vulnerabilities": [
+    {
+      "cveID": "CVE-0000-0001",
+      "vendorProject": "Examplevendor",
+      "product": "Controller"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import os
 import sys
 from pathlib import Path
 
-from . import __version__, checklist, exposure, report
+from . import __version__, checklist, engagement_cli, exposure, report
 from .net import BlockedHost, LookupFailed
 from .site import (MAX_ADDRESSES, SECTORS, STATEMENT, Site, SiteError, create_site,
                    lookup_owner, parse_addresses)
@@ -105,6 +105,8 @@ def parser():
 
     output = commands.add_parser("report", help="write report.html")
     output.set_defaults(run=cmd_report)
+
+    engagement_cli.add_commands(commands)
     return main
 
 

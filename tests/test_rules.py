@@ -32,6 +32,16 @@ def test_web_panel_found_by_title():
     assert finding["rule"] == "control-panel" and finding["severity"] == "critical"
 
 
+@pytest.mark.parametrize("port", [5900, 5905, 5910])
+def test_vnc_port_range_from_the_advisory(port):
+    assert one(banner(port=port))["rule"] == "vnc"
+
+
+@pytest.mark.parametrize("title", ["Danfoss StoreView", "XWEB 300D", "Site Supervisor"])
+def test_refrigeration_panels_named_in_public_research(title):
+    assert one(banner(title=title))["rule"] == "control-panel"
+
+
 def test_keywords_match_whole_words_only():
     assert one(banner(title="Schmidt Bakery")) is None
 

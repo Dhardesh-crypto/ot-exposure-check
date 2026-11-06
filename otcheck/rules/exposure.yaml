@@ -50,7 +50,7 @@ rules:
   - id: vnc
     name: VNC remote screen
     severity: critical
-    ports: [5900, 5901]
+    ports: [5900, 5901, 5902, 5903, 5904, 5905, 5906, 5907, 5908, 5909, 5910]
     modules: [vnc]
     keywords: [vnc]
     why: CISA reports attackers using VNC with default or weak passwords to take over control screens.
@@ -59,7 +59,7 @@ rules:
     severity: critical
     ports: []
     modules: []
-    keywords: [hmi, scada, webvisu, plc, pcoweb, xweb, ak-sm, refrigeration, plant controller]
+    keywords: [hmi, scada, webvisu, plc, pcoweb, xweb, ak-sm, ak-sc, storeview, site supervisor, refrigeration, plant controller]
     why: A control panel on the internet can be reached by anyone who finds it, and is then protected by a password alone.
   - id: rdp
     name: Windows Remote Desktop
@@ -82,5 +82,7 @@ fix: >-
   a strong password and multifactor authentication. Ask whoever manages the
   router or firewall to close the port, then re-run this check. Also look for
   signs of tampering: changed setpoints, disabled alarms or unknown accounts.
-refs: [cisa-2025, cisa-2024]
+  If it has a weak or default password, assume it has been compromised and
+  follow your incident plan.
+refs: [cisa-2025, cisa-2024, cisa-aa25-343a]
 frameworks: ["CISA CPG 2.X", "IEC 62443 FR5", "NIS2 Art. 21(2)(i)"]

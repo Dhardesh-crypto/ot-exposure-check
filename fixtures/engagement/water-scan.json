@@ -1,0 +1,1 @@
+{"ip_str": "198.51.100.60", "port": 443, "transport": "tcp", "timestamp": "2026-11-02T04:10:00", "_shodan": {"module": "https"}, "http": {"title": "Example Water Portal"}}

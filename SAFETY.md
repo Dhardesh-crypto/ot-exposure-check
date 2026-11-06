@@ -7,15 +7,17 @@ Industrial equipment can behave badly when probed, and a mistake can affect food
 - Reads scan data that a third party has already collected.
 - Reads the answers you give it.
 - Looks up the registered owner of your addresses in public internet registries.
+- For consultants: reads network logs and asset lists supplied as files, and can download CISA's public list of known exploited vulnerabilities.
 
 ## What otcheck never does
 
 - Connect to your controllers, control screens or public addresses.
 - Scan, probe, exploit or guess passwords.
 - Write to or change any device.
+- Capture network traffic.
 - Send your site data anywhere except the lookups above.
 
-Network access is limited to one module, `otcheck/net.py`, which only allows Shodan and the internet registries. `tests/test_safety.py` checks this.
+Network access is limited to one module, `otcheck/net.py`, which only allows Shodan, the internet registries and CISA's website. `tests/test_safety.py` checks this.
 
 ## What these lookups reveal
 

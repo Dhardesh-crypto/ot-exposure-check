@@ -1,0 +1,9 @@
+#separator \x09
+#path	conn
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	service
+#types	time	string	addr	port	addr	port	enum	string
+1.0	A	10.20.0.5	40000	10.10.0.11	502	tcp	modbus
+2.0	B	10.20.0.8	40001	10.10.0.11	502	tcp	-
+3.0	C	203.0.113.77	40002	10.10.0.12	20000	tcp	dnp3
+4.0	D	10.10.0.11	40003	198.51.100.200	443	tcp	ssl
+5.0	E	not-an-ip	1	10.10.0.12	502	tcp	-

@@ -16,6 +16,14 @@
 - [ ] Legal review of wording and terms
 - [ ] Check Shodan's terms for commercial use
 
-## Next phase
+## Consultant toolkit
 
-- [ ] Passive traffic analysis (Malcolm/Zeek) and advisory matching
+- [x] Engagement scope, dates and activity log
+- [x] Evidence-backed answers
+- [x] Multi-site patterns, client report, findings register and retest
+- [x] Offline Zeek and Malcolm logs, support and exploited-list matching
+- [x] Templates and consultant guide
+- [ ] Test the parser on a real Zeek or Malcolm export
+- [ ] Download CISA's real list and check the matching
+- [ ] Lawyer review of templates
+- [ ] Trial on one real, authorised engagement

@@ -19,7 +19,7 @@ otcheck = "otcheck.cli:main"
 packages = ["otcheck"]
 
 [tool.setuptools.package-data]
-otcheck = ["rules/*.yaml", "rules/checklist/*.yaml", "templates/*.html"]
+otcheck = ["rules/*.yaml", "rules/checklist/*.yaml", "templates/*.html", "templates/consultant/*.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

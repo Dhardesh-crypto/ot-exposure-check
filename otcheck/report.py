@@ -26,6 +26,7 @@ def _exposure_findings(result, config):
         )
         items.append(
             {
+                "key": "scan:%s:%s:%s" % (finding["rule"], service["ip"], service["port"]),
                 "title": "%s visible on %s port %s"
                 % (finding["name"], service["ip"], service["port"]),
                 "category": "exposure",
@@ -52,6 +53,7 @@ def _checklist_findings(questions, answers):
         unknown = question["answer"] == "unsure"
         items.append(
             {
+                "key": "question:%s" % question["id"],
                 "title": question["ask"],
                 "category": question["category"],
                 "severity": question["severity"],
@@ -68,7 +70,7 @@ def _checklist_findings(questions, answers):
     return items
 
 
-def _rank(finding):
+def rank(finding):
     # Severity leads, so a critical gap is never listed below a high one. Within a
     # severity: exposure, access, resilience, with scan evidence ahead of answers.
     return (
@@ -90,10 +92,12 @@ def _verdict(items, complete):
     return "clear", "Nothing found in this data"
 
 
-def build(site, scan, questions, answers):
+def build(site, scan, questions, answers, extra=()):
+    """Build the report model. "extra" lets consultant modules add their findings."""
     config = exposure.load_rules()
     items = _exposure_findings(scan, config) + _checklist_findings(questions, answers)
-    items.sort(key=_rank)
+    items.extend(dict(item) for item in extra)
+    items.sort(key=rank)
     for position, item in enumerate(items, 1):
         item["number"] = position
         item["category_label"] = CATEGORY_LABELS[item["category"]]

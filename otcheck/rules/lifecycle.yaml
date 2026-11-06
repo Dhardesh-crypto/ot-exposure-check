@@ -1,0 +1,20 @@
+# Support status of specific products, taken from public sources. Add entries
+# only with a source. A match means "check this", because model names alone
+# don't prove what is installed.
+products:
+  - make: danfoss
+    model: "ak-sm 800"
+    status: end of life
+    detail: Forescout reports it has been end of life since May 2021 and can't be patched.
+    refs: [forescout-2026]
+  - make: danfoss
+    model: "ak-sc 366"
+    status: end of life
+    detail: Reported as phased out in 2016.
+    refs: [cybersecuritydive-2026]
+  - make: danfoss
+    model: "ak-sm 800a"
+    fixed_in: "4.3.1"
+    cves: [CVE-2025-41451, CVE-2025-41452]
+    detail: Firmware older than 4.3.1 is affected by these published flaws.
+    refs: [forescout-2026]

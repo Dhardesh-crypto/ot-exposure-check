@@ -1,0 +1,122 @@
+{
+  "default-passwords": {
+    "answer": "no",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "verified"
+  },
+  "strong-passwords": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "remote-private": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "mfa": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "vendor-access": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "dormant-accounts": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "vnc-updated": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "remote-logging": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "connection-inventory": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "segmentation": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "manual-operation": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "backups": {
+    "answer": "unsure",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "incident-contacts": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "logic-integrity": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "end-of-life": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "network-diagrams": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "independent-temperature-alarm": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "setpoint-limits": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "contractor-monitoring-link": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  },
+  "stock-plan": {
+    "answer": "yes",
+    "source": "Site lead interview",
+    "evidence": "Interview notes 1",
+    "status": "stated"
+  }
+}

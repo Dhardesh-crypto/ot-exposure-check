@@ -1,0 +1,5 @@
+ip,make,model,firmware
+10.1.0.5,Danfoss,AK-SM 800,1.2
+10.1.0.6,Danfoss,AK-SM 800A,4.2.0
+10.1.0.7,Danfoss,AK-SM 800A,4.3.1
+10.1.0.8,Examplevendor,Controller 9,1.0
